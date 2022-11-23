@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TopicService {
@@ -22,5 +23,9 @@ public class TopicService {
 
     public void addNewTopic(Topic topic) {
         topicRepository.save(topic);
+    }
+
+    public Optional<Topic> findById(Long id) {
+        return topicRepository.findById(id);
     }
 }

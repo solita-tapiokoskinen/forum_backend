@@ -4,34 +4,42 @@ import javax.persistence.Entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="topic")
+@Table(name="topics")
 class Topic {
 
-    private @Id Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
     private String created_at;
+    @Column(nullable = false)
     private String updated_at;
+    @Column(nullable = false)
     private String title;
-    private Long owner;
+    @Column(nullable = false)
+    private Long owner_id;
 
-    public Topic(String created_at, String updated_at, String title, Long owner) {
+    public Topic(String created_at, String updated_at, String title, Long owner_id) {
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.title = title;
-        this.owner = owner;
+        this.owner_id = owner_id;
     }
 
-    public Topic(Long id, String created_at, String updated_at, String title, Long owner) {
+    public Topic(Long id, String created_at, String updated_at, String title, Long owner_id) {
         this.id = id;
         this.created_at = created_at;
         this.updated_at = updated_at;
         this.title = title;
-        this.owner = owner;
+        this.owner_id = owner_id;
     }
 
     public Topic() {
 
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -65,11 +73,11 @@ class Topic {
     }
 
     public Long getOwner() {
-        return owner;
+        return owner_id;
     }
 
-    public void setOwner(Long owner) {
-        this.owner = owner;
+    public void setOwner(Long owner_id) {
+        this.owner_id = owner_id;
     }
 
     @Override
@@ -79,7 +87,7 @@ class Topic {
                 ", created_at=" + created_at +
                 ", updated_at=" + updated_at +
                 ", title='" + title + '\'' +
-                ", owner='" + owner + '\'' +
+                ", owner='" + owner_id + '\'' +
                 '}';
     }
 }
