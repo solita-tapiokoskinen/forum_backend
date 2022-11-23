@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,8 +19,16 @@ public class UserService {
     }
 
     public void registerUser(User user) {
-        System.out.println("Hello"+user.toString());
-        userRepository.save(user);
+        boolean exists = userRepository.existsById(user.getId());
+        if (exists){
+            System.out.println("nono");
+        }
+        else {
+            userRepository.save(user);
+            }
     }
 
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
 }
