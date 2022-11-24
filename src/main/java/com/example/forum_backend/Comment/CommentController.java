@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api")
@@ -18,8 +17,9 @@ public class CommentController {
     public CommentController(CommentService commentService) { this.commentService = commentService;}
 
     @GetMapping("/comments/{topicId}")
-    public Optional<Comment> getCommentsByTopic(@PathVariable Long topicId){
-        return null;
+    public ResponseEntity<List<CommentDto>> getCommentsByTopic(@PathVariable Long topicId){
+
+        return new ResponseEntity<>(commentService.getCommentsByTopic(topicId), HttpStatus.OK);
     }
 
     @PostMapping("/comments/add")
