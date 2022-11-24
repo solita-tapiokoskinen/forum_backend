@@ -2,6 +2,7 @@ package com.example.forum_backend.Comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,11 +19,13 @@ public class CommentController {
 
     @GetMapping("/comments/{topicId}")
     public Optional<Comment> getCommentsByTopic(@PathVariable Long topicId){
-        return commentService.getCommentsByTopic(topicId);
+        return null;
     }
 
-    @PostMapping("/comments/addNew")
+    @PostMapping("/comments/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public void postComment(@RequestBody Comment comment) { commentService.postComment(comment);}
+    public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto) {
+        return new ResponseEntity<>(commentService.addComment(commentDto), HttpStatus.CREATED);
+    }
 
 }
