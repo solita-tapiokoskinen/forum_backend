@@ -8,4 +8,5 @@ public interface TopicService {
 
     List<TopicDto> getAllTopics();
 
+    TopicDto getTopicById(Long id);
 }

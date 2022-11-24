@@ -1,5 +1,6 @@
 package com.example.forum_backend.Topic;
 
+import com.example.forum_backend.Exceptions.TopicNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,12 @@ public class TopicServiceImpl implements TopicService{
     public List<TopicDto> getAllTopics() {
         List<Topic> topic = topicRepository.findAll();
         return topic.stream().map(t -> mapToDto(t)).collect(Collectors.toList());
+    }
+
+    @Override
+    public TopicDto getTopicById(Long id) {
+        Topic topic = topicRepository.findById(id).orElseThrow(()-> new TopicNotFoundException("Topic could not be found"));
+        return mapToDto(topic);
     }
 
     private TopicDto mapToDto(Topic topic) {

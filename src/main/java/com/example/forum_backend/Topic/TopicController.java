@@ -28,8 +28,9 @@ public class TopicController {
     }
 
     @GetMapping("/topics/{id}")
-    public Optional<Topic> topicDetail(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<TopicDto> topicDetail(@PathVariable Long id) {
+
+        return ResponseEntity.ok(topicService.getTopicById(id));
     }
 
     @PostMapping("/topic/add")
