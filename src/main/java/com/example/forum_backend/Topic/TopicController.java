@@ -22,8 +22,9 @@ public class TopicController {
     }
 
     @GetMapping("/topics")
-    public List<Topic> getTopic() {
-        return null;
+    public ResponseEntity<List<TopicDto>> getAllTopics() {
+
+        return new ResponseEntity<>(topicService.getAllTopics(), HttpStatus.OK);
     }
 
     @GetMapping("/topics/{id}")
