@@ -9,4 +9,6 @@ public interface TopicService {
     List<TopicDto> getAllTopics();
 
     TopicDto getTopicById(Long id);
+
+    TopicDto updateTopic(TopicDto topicDto, long id);
 }

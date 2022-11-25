@@ -46,6 +46,16 @@ public class TopicServiceImpl implements TopicService{
         return mapToDto(topic);
     }
 
+    @Override
+    public TopicDto updateTopic(TopicDto topicDto, long id) {
+        Topic topic = topicRepository.findById(id).orElseThrow(() -> new TopicNotFoundException("Topic not found"));
+
+        topic.setTitle(topicDto.getTitle());
+
+        Topic updatedTopic = topicRepository.save(topic);
+        return mapToDto(updatedTopic);
+    }
+
     private TopicDto mapToDto(Topic topic) {
         TopicDto topicDto = new TopicDto();
         topicDto.setId(topic.getId());
