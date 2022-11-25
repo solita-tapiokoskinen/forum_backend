@@ -8,4 +8,5 @@ public interface CommentService {
 
     List<CommentDto> getCommentsByTopic(Long topicId);
 
+    CommentDto updateComment(CommentDto commentDto, long id);
 }

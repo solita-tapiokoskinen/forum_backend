@@ -1,5 +1,6 @@
 package com.example.forum_backend.Comment;
 
+import com.example.forum_backend.Exceptions.CommentNotFoundException;
 import com.example.forum_backend.Topic.TopicDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,16 @@ public class CommentServiceImpl implements CommentService{
         List<Comment> topicComments = commentRepository.findByTopicId(topicId);
 
         return topicComments.stream().map(c -> mapToDto(c)).collect(Collectors.toList());
+    }
+
+    @Override
+    public CommentDto updateComment(CommentDto commentDto, long id) {
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException(("Comment not found")));
+
+        comment.setComment(commentDto.getComment());
+
+        Comment updatedComment = commentRepository.save(comment);
+        return mapToDto((updatedComment));
     }
 
     private CommentDto mapToDto(Comment comment) {
