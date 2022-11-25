@@ -45,4 +45,10 @@ public class TopicController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @DeleteMapping("topics/{id}/delete")
+    public ResponseEntity<String> deleteTopic(@PathVariable long id) {
+        topicService.deleteTopic(id);
+        return new ResponseEntity<>("Topic deleted", HttpStatus.OK);
+    }
+
 }

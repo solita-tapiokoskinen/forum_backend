@@ -11,4 +11,7 @@ public interface TopicService {
     TopicDto getTopicById(Long id);
 
     TopicDto updateTopic(TopicDto topicDto, long id);
+
+    void deleteTopic(long id);
+
 }
