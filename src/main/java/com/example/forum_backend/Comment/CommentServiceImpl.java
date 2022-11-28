@@ -8,6 +8,7 @@ import com.example.forum_backend.Topic.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,8 @@ public class CommentServiceImpl implements CommentService{
 
         Topic topic = topicRepository.findById(topicId).orElseThrow(()->new TopicNotFoundException(("Topic with associated comment not found")));
         comment.setTopic(topic);
+        comment.setCreatedAt(new Date());
+        comment.setUpdatedAt(new Date());
 
         Comment newComment = commentRepository.save(comment);
 
@@ -53,6 +56,7 @@ public class CommentServiceImpl implements CommentService{
         }
 
         comment.setComment(commentDto.getComment());
+        comment.setUpdatedAt(new Date());
 
         Comment updatedComment = commentRepository.save(comment);
         return mapToDto((updatedComment));
@@ -75,6 +79,8 @@ public class CommentServiceImpl implements CommentService{
         commentDto.setId(comment.getId());
         commentDto.setOwner(comment.getOwner());
         commentDto.setComment(comment.getComment());
+        commentDto.setCreatedAt(comment.getCreatedAt());
+        commentDto.setUpdatedAt(comment.getUpdatedAt());
 
         return commentDto;
     }
@@ -84,6 +90,8 @@ public class CommentServiceImpl implements CommentService{
         comment.setId(commentDto.getId());
         comment.setComment(commentDto.getComment());
         comment.setOwner(commentDto.getOwner());
+        comment.setCreatedAt(commentDto.getCreatedAt());
+        comment.setUpdatedAt(commentDto.getUpdatedAt());
 
         return comment;
     }

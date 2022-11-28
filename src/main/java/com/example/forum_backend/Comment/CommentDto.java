@@ -4,27 +4,27 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 public class CommentDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private Long owner;
-
-
-    @Column(nullable = false)
     private String comment;
+    private Date createdAt;
+    private Date updatedAt;
 
     public CommentDto() {
 
     }
-    public CommentDto(Long id, Long owner, String comment) {
+    public CommentDto(Long id, Long owner, String comment, Date createdAt, Date updatedAt) {
         this.id = id;
         this.owner = owner;
         this.comment = comment;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -50,12 +50,29 @@ public class CommentDto {
     public void setComment(String comment) {
         this.comment = comment;
     }
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", owner=" + owner +
                 ", comment='" + comment + '\'' +
+                ", created at='" + createdAt + '\'' +
+                ", updated at='" + updatedAt + '\'' +
                 '}';
     }
 
