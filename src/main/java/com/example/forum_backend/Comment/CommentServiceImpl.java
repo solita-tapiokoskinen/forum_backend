@@ -44,13 +44,30 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentDto updateComment(CommentDto commentDto, long id) {
-        Comment comment = commentRepository.findById(id).orElseThrow(() -> new CommentNotFoundException(("Comment not found")));
+    public CommentDto updateComment(CommentDto commentDto, long topicId, long commentId) {
+        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new TopicNotFoundException("Topic with associated comment not found"));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException("Comment with associate topic not found"));
+
+        if(comment.getTopic().getId() != topic.getId()) {
+            throw new CommentNotFoundException("This comment does not belong to a topic");
+        }
 
         comment.setComment(commentDto.getComment());
 
         Comment updatedComment = commentRepository.save(comment);
         return mapToDto((updatedComment));
+    }
+
+    @Override
+    public void deleteComment(long topicId, long commentId) {
+        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new TopicNotFoundException("Topic with associated comment not found"));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException("Comment with associate topic not found"));
+
+        if(comment.getTopic().getId() != topic.getId()) {
+            throw new CommentNotFoundException("This comment does not belong to a topic");
+        }
+
+        commentRepository.delete(comment);
     }
 
     private CommentDto mapToDto(Comment comment) {
