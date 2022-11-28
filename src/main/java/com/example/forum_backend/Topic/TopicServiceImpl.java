@@ -4,6 +4,7 @@ import com.example.forum_backend.Exceptions.TopicNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,15 +23,12 @@ public class TopicServiceImpl implements TopicService{
         Topic topic = new Topic();
         topic.setOwner(topicDto.getOwner_id());
         topic.setTitle(topicDto.getTitle());
+        topic.setCreatedAt(new Date());
+        topic.setUpdatedAt(new Date());
 
         Topic newTopic = topicRepository.save(topic);
 
-        TopicDto topicResponse = new TopicDto();
-        topicResponse.setId(newTopic.getId());
-        topicResponse.setOwner_id(newTopic.getOwner());
-        topicResponse.setTitle(newTopic.getTitle());
-
-        return topicResponse;
+        return mapToDto(newTopic);
 
     }
 
@@ -51,6 +49,7 @@ public class TopicServiceImpl implements TopicService{
         Topic topic = topicRepository.findById(id).orElseThrow(() -> new TopicNotFoundException("Topic not found"));
 
         topic.setTitle(topicDto.getTitle());
+        topic.setUpdatedAt(new Date());
 
         Topic updatedTopic = topicRepository.save(topic);
         return mapToDto(updatedTopic);
@@ -67,6 +66,8 @@ public class TopicServiceImpl implements TopicService{
         topicDto.setId(topic.getId());
         topicDto.setOwner_id(topic.getOwner());
         topicDto.setTitle(topic.getTitle());
+        topicDto.setCreatedAt(topic.getCreatedAt());
+        topicDto.setUpdatedAt(topic.getUpdatedAt());
 
         return topicDto;
     }
@@ -75,6 +76,9 @@ public class TopicServiceImpl implements TopicService{
         Topic topic = new Topic();
         topic.setOwner(topicDto.getOwner_id());
         topic.setTitle(topicDto.getTitle());
+        topic.setCreatedAt(topicDto.getCreatedAt());
+        topic.setUpdatedAt(topicDto.getUpdatedAt());
+
         return topic;
     }
 
