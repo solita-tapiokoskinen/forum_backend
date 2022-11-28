@@ -1,6 +1,7 @@
 package com.example.forum_backend.Comment;
 
 import javax.persistence.*;
+import com.example.forum_backend.Topic.Topic;
 
 @Entity
 @Table(name = "comments")
@@ -15,19 +16,16 @@ public class Comment {
 
 
     @Column(nullable = false)
-    private Long topicId;
-
-    @Column(nullable = false)
     private String comment;
 
     public Comment() {
 
     }
-    public Comment(Long id, Long owner, Long topicId, String comment) {
+    public Comment(Long id, Long owner, String comment, Topic topic) {
         this.id = id;
         this.owner = owner;
-        this.topicId = topicId;
         this.comment = comment;
+        this.topic = topic;
     }
 
     public Long getId() {
@@ -45,13 +43,6 @@ public class Comment {
     public void setOwner(Long owner) {
         this.owner = owner;
     }
-    public Long getTopicId() {
-        return topicId;
-    }
-
-    public void setTopicId(Long topic_id) {
-        this.topicId = topic_id;
-    }
 
     public String getComment() {
         return comment;
@@ -65,10 +56,21 @@ public class Comment {
         return "Comment{" +
                 "id=" + id +
                 ", owner=" + owner +
-                ", topic_id=" + topicId +
                 ", comment='" + comment + '\'' +
+                ", topic='" + topic + '\'' +
                 '}';
     }
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "topic_id")
+    private Topic topic;
+    public Topic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(Topic topic) {
+        this.topic = topic;
+    }
 
 }

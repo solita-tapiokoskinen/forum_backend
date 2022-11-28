@@ -1,11 +1,15 @@
 package com.example.forum_backend.Topic;
 
+import com.example.forum_backend.Comment.Comment;
+
 import javax.persistence.Entity;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="topics")
-class Topic {
+public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +19,9 @@ class Topic {
     private String title;
     @Column(nullable = false)
     private Long owner_id;
+
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<Comment>();
 
     public Topic(Long id, String title, Long owner_id) {
         this.id = id;
