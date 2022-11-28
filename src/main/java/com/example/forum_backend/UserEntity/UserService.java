@@ -1,4 +1,4 @@
-package com.example.forum_backend.User;
+package com.example.forum_backend.UserEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,21 +14,21 @@ public class UserService {
     public UserService(UserRepository userRepository) { this.userRepository = userRepository;}
 
     @Autowired
-    public List<User> getUsers() {
+    public List<UserEntity> getUsers() {
         return userRepository.findAll();
     }
 
-    public void registerUser(User user) {
-        boolean exists = userRepository.existsById(user.getId());
+    public void registerUser(UserEntity userEntity) {
+        boolean exists = userRepository.existsById(userEntity.getId());
         if (exists){
             System.out.println("nono");
         }
         else {
-            userRepository.save(user);
+            userRepository.save(userEntity);
             }
     }
 
-    public Optional<User> findById(Long id) {
+    public Optional<UserEntity> findById(Long id) {
         return userRepository.findById(id);
     }
 }

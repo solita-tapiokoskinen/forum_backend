@@ -1,29 +1,32 @@
-package com.example.forum_backend.User;
+package com.example.forum_backend.UserEntity;
+
+import com.example.forum_backend.Role.Role;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false, unique = true)
     private String email;
-
     @Column(nullable = false)
     private String password;
 
-    public User(String username, String email, String password) {
+    public UserEntity(String username, String email, String password, List<Role> roles) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.roles = roles;
     }
 
-    public User() {}
+    public UserEntity() {}
 
     public Long getId() {
         return id;
@@ -58,6 +61,13 @@ public class User {
         this.password = password;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
     @Override
     public String toString() {
         return "User{" +
@@ -65,6 +75,13 @@ public class User {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", Roles='" + roles + '\'' +
                 '}';
     }
+
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private List<Role> roles = new ArrayList<>();
 }
