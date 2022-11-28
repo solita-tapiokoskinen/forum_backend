@@ -16,21 +16,22 @@ public class CommentController {
     @Autowired
     public CommentController(CommentService commentService) { this.commentService = commentService;}
 
-    @GetMapping("/comments/{topicId}")
-    public ResponseEntity<List<CommentDto>> getCommentsByTopic(@PathVariable Long topicId){
+    @GetMapping("/topics/{topicId}/comments")
+    public List<CommentDto> getCommentsByTopic(@PathVariable(value = "topicId") Long topicId){
 
-        return new ResponseEntity<>(commentService.getCommentsByTopic(topicId), HttpStatus.OK);
+        return commentService.getCommentsByTopic(topicId);
     }
 
-    @PostMapping("/comments/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CommentDto> addComment(@RequestBody CommentDto commentDto) {
-        return new ResponseEntity<>(commentService.addComment(commentDto), HttpStatus.CREATED);
+    @PostMapping("/topics/{topicId}/comments")
+    public ResponseEntity<CommentDto> addComment(
+            @PathVariable(value = "topicId") Long topicId,
+            @RequestBody CommentDto commentDto) {
+        return new ResponseEntity<>(commentService.addComment(topicId, commentDto), HttpStatus.CREATED);
     }
 
-    @PutMapping("/comments/{id}")
-    public ResponseEntity<CommentDto> updateComment(@RequestBody CommentDto commentDto, @PathVariable long id){
-        CommentDto response = commentService.updateComment(commentDto, id);
+    @PutMapping("/topics/{topicId}/comments/{commentId}")
+    public ResponseEntity<CommentDto> updateComment(@RequestBody CommentDto commentDto, @PathVariable long commentId){
+        CommentDto response = commentService.updateComment(commentDto, commentId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

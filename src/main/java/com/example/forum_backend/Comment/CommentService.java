@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface CommentService {
 
-    CommentDto addComment(CommentDto commentDto);
+    CommentDto addComment(Long topicId, CommentDto commentDto);
 
-    List<CommentDto> getCommentsByTopic(Long topicId);
+    List<CommentDto> getCommentsByTopic(long topicId);
 
     CommentDto updateComment(CommentDto commentDto, long id);
 }

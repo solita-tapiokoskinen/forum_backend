@@ -1,46 +1,44 @@
 package com.example.forum_backend.Comment;
 
 import com.example.forum_backend.Exceptions.CommentNotFoundException;
+import com.example.forum_backend.Exceptions.TopicNotFoundException;
+import com.example.forum_backend.Topic.Topic;
 import com.example.forum_backend.Topic.TopicDto;
+import com.example.forum_backend.Topic.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService{
 
     private CommentRepository commentRepository;
+    private TopicRepository topicRepository;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, TopicRepository topicRepository) {
         this.commentRepository = commentRepository;
+        this.topicRepository = topicRepository;
     }
 
     @Override
-    public CommentDto addComment(CommentDto commentDto) {
-        Comment comment = new Comment();
-        comment.setOwner(commentDto.getOwner());
-        comment.setTopicId(commentDto.getTopicId());
-        comment.setComment(commentDto.getComment());
+    public CommentDto addComment(Long topicId, CommentDto commentDto) {
+        Comment comment = mapToEntity(commentDto);
+
+        Topic topic = topicRepository.findById(topicId).orElseThrow(()->new TopicNotFoundException(("Topic with associated comment not found")));
+        comment.setTopic(topic);
 
         Comment newComment = commentRepository.save(comment);
 
-        CommentDto commentResponse = new CommentDto();
-        commentResponse.setId(newComment.getId());
-        commentResponse.setOwner(newComment.getOwner());
-        commentResponse.setTopicId(commentDto.getTopicId());
-        commentResponse.setComment(newComment.getComment());
-
-        return commentResponse;
+        return mapToDto(newComment);
 
     }
 
     @Override
-    public List<CommentDto> getCommentsByTopic(Long topicId) {
-        List<Comment> topicComments = commentRepository.findByTopicId(topicId);
+    public List<CommentDto> getCommentsByTopic(long topicId) {
+        List<Comment> topicComments = commentRepository.findCommentByTopicId(topicId);
 
         return topicComments.stream().map(c -> mapToDto(c)).collect(Collectors.toList());
     }
@@ -58,7 +56,6 @@ public class CommentServiceImpl implements CommentService{
     private CommentDto mapToDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
-        commentDto.setTopicId(comment.getTopicId());
         commentDto.setOwner(comment.getOwner());
         commentDto.setComment(comment.getComment());
 
@@ -67,9 +64,9 @@ public class CommentServiceImpl implements CommentService{
 
     private Comment mapToEntity(CommentDto commentDto) {
         Comment comment = new Comment();
+        comment.setId(commentDto.getId());
         comment.setComment(commentDto.getComment());
-        comment.setOwner(comment.getOwner());
-        comment.setTopicId(commentDto.getTopicId());
+        comment.setOwner(commentDto.getOwner());
 
         return comment;
     }
