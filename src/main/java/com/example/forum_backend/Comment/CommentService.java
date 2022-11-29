@@ -6,7 +6,7 @@ public interface CommentService {
 
     CommentDto addComment(Long topicId, CommentDto commentDto);
 
-    List<CommentDto> getCommentsByTopic(long topicId);
+    CommentResponse getCommentsByTopic(long topicId, int pageNo, int pageSize);
 
     CommentDto updateComment(CommentDto commentDto, long topicId, long commentId);
 

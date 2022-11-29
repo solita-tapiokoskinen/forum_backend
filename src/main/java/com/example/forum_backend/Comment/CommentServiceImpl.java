@@ -6,6 +6,9 @@ import com.example.forum_backend.Topic.Topic;
 import com.example.forum_backend.Topic.TopicDto;
 import com.example.forum_backend.Topic.TopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -40,10 +43,21 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public List<CommentDto> getCommentsByTopic(long topicId) {
-        List<Comment> topicComments = commentRepository.findCommentByTopicId(topicId);
+    public CommentResponse getCommentsByTopic(long topicId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Comment> comments = commentRepository.findCommentByTopicId(topicId, pageable);
+        List<Comment> listOfComments = comments.getContent();
+        List<CommentDto> content = listOfComments.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
 
-        return topicComments.stream().map(c -> mapToDto(c)).collect(Collectors.toList());
+        CommentResponse commentResponse = new CommentResponse();
+        commentResponse.setContent(content);
+        commentResponse.setPageNo(comments.getNumber());
+        commentResponse.setPageSize(comments.getSize());
+        commentResponse.setTotalElements(comments.getTotalElements());
+        commentResponse.setTotalPages(comments.getTotalPages());
+        commentResponse.setLast(comments.isLast());
+
+        return commentResponse;
     }
 
     @Override

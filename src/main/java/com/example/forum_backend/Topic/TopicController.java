@@ -22,9 +22,11 @@ public class TopicController {
     }
 
     @GetMapping("/topics")
-    public ResponseEntity<List<TopicDto>> getAllTopics() {
+    public ResponseEntity<TopicResponse> getAllTopics(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+                                                      @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    ) {
 
-        return new ResponseEntity<>(topicService.getAllTopics(), HttpStatus.OK);
+        return new ResponseEntity<>(topicService.getAllTopics(pageNo, pageSize), HttpStatus.OK);
     }
 
     @GetMapping("/topics/{id}")

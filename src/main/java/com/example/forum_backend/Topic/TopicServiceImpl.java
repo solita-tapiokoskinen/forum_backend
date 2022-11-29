@@ -2,6 +2,9 @@ package com.example.forum_backend.Topic;
 
 import com.example.forum_backend.Exceptions.TopicNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -33,9 +36,21 @@ public class TopicServiceImpl implements TopicService{
     }
 
     @Override
-    public List<TopicDto> getAllTopics() {
-        List<Topic> topic = topicRepository.findAll();
-        return topic.stream().map(t -> mapToDto(t)).collect(Collectors.toList());
+    public TopicResponse getAllTopics(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Topic> topics = topicRepository.findAll(pageable);
+        List<Topic> listOfTopics = topics.getContent();
+        List<TopicDto> content = listOfTopics.stream().map(p -> mapToDto(p)).collect(Collectors.toList());
+
+        TopicResponse topicResponse = new TopicResponse();
+        topicResponse.setContent(content);
+        topicResponse.setPageNo(topics.getNumber());
+        topicResponse.setPageSize(topics.getSize());
+        topicResponse.setTotalElements(topics.getTotalElements());
+        topicResponse.setTotalPages(topics.getTotalPages());
+        topicResponse.setLast(topics.isLast());
+
+        return topicResponse;
     }
 
     @Override

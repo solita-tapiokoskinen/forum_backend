@@ -17,9 +17,11 @@ public class CommentController {
     public CommentController(CommentService commentService) { this.commentService = commentService;}
 
     @GetMapping("/topics/{topicId}/comments")
-    public List<CommentDto> getCommentsByTopic(@PathVariable(value = "topicId") Long topicId){
+    public ResponseEntity<CommentResponse> getAllCommentsByTopic(@PathVariable(value = "topicId") Long topicId,
+                                              @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+                                              @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize){
 
-        return commentService.getCommentsByTopic(topicId);
+        return new ResponseEntity<>(commentService.getCommentsByTopic(topicId, pageNo, pageSize), HttpStatus.OK);
     }
 
     @PostMapping("/topics/{topicId}/comments")

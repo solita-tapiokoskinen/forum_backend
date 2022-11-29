@@ -6,7 +6,7 @@ public interface TopicService {
 
     TopicDto addTopic(TopicDto topicDto);
 
-    List<TopicDto> getAllTopics();
+    TopicResponse getAllTopics(int pageNo, int pageSize);
 
     TopicDto getTopicById(Long id);
 
