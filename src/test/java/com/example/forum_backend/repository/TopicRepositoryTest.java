@@ -49,14 +49,12 @@ public class TopicRepositoryTest {
         topic.setOwner(1L);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
-        System.out.println(topic);
 
         Topic topic2 = new Topic();
         topic2.setTitle("Unit test 2");
         topic2.setOwner(1L);
         topic2.setCreatedAt(new Date());
         topic2.setUpdatedAt(new Date());
-        System.out.println(topic2);
 
         topicRepository.save(topic);
         topicRepository.save(topic2);
@@ -76,7 +74,6 @@ public class TopicRepositoryTest {
         topic.setOwner(1L);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
-        System.out.println(topic);
 
         Topic testTopic = topicRepository.save(topic);
 
@@ -93,7 +90,6 @@ public class TopicRepositoryTest {
         topic.setOwner(1L);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
-        System.out.println(topic);
 
         topicRepository.save(topic);
 
