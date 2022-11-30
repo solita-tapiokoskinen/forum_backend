@@ -1,17 +1,15 @@
 package com.example.forum_backend.Service;
 
 import com.example.forum_backend.Topic.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 import java.util.Optional;
@@ -19,7 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+
 @ExtendWith(MockitoExtension.class)
 public class TopicServiceTest {
 
