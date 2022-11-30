@@ -1,4 +1,4 @@
-package com.example.forum_backend.repository;
+package com.example.forum_backend.Repository;
 
 import com.example.forum_backend.Comment.Comment;
 import com.example.forum_backend.Comment.CommentRepository;
