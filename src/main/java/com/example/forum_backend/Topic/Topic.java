@@ -27,15 +27,24 @@ public class Topic {
     @Column(nullable = false)
     private Date updatedAt;
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<Comment>();
 
-    public Topic(Long id, String title, Long owner_id, Date createdAt, Date updatedAt) {
+    public Topic(Long id, String title, Long owner_id, Date createdAt, Date updatedAt, List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.owner_id = owner_id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.comments = comments;
     }
 
     public Topic() {
@@ -89,6 +98,7 @@ public class Topic {
                 ", owner='" + owner_id + '\'' +
                 ", created='" + createdAt + '\'' +
                 ", updated='" + updatedAt + '\'' +
+                ", comments='" + comments + '\'' +
                 '}';
     }
 }
