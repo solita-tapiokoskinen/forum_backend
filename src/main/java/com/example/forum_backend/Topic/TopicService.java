@@ -1,7 +1,5 @@
 package com.example.forum_backend.Topic;
 
-import java.util.List;
-
 public interface TopicService {
 
     TopicDto addTopic(TopicDto topicDto);
