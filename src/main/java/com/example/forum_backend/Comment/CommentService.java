@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    CommentDto addComment(Long topicId, CommentDto commentDto);
+    CommentDto addComment(long topicId, CommentDto commentDto);
 
     CommentResponse getCommentsByTopic(long topicId, int pageNo, int pageSize);
 

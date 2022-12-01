@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public CommentDto addComment(Long topicId, CommentDto commentDto) {
+    public CommentDto addComment(long topicId, CommentDto commentDto) {
         Comment comment = mapToEntity(commentDto);
 
         Topic topic = topicRepository.findById(topicId).orElseThrow(()->new TopicNotFoundException(("Topic with associated comment not found")));
