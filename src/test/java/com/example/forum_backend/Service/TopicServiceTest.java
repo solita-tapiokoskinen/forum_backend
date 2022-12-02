@@ -1,6 +1,8 @@
 package com.example.forum_backend.Service;
 
 import com.example.forum_backend.Topic.*;
+import com.example.forum_backend.UserEntity.UserEntity;
+import com.example.forum_backend.UserEntity.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,14 +26,20 @@ public class TopicServiceTest {
     @Mock
     private TopicRepository topicRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
     @InjectMocks
     private TopicServiceImpl topicService;
 
     @Test
     public void TopicService_CreateTopic_ReturnsTopicDto() {
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
+        topic.setOwner(user);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 
@@ -42,6 +50,7 @@ public class TopicServiceTest {
         topicDto.setUpdatedAt(new Date());
 
         when(topicRepository.save(Mockito.any(Topic.class))).thenReturn(topic);
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
         TopicDto savedTopic = topicService.addTopic(topicDto);
         Assertions.assertThat(savedTopic).isNotNull();
@@ -61,11 +70,20 @@ public class TopicServiceTest {
 
     @Test
     public void TopicService_GetTopicById_ReturnsTopicDto() {
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
+        topic.setOwner(user);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
+
+        TopicDto topicDto = new TopicDto();
+        topicDto.setTitle("Unit test");
+        topicDto.setOwner_id(1L);
+        topicDto.setCreatedAt(new Date());
+        topicDto.setUpdatedAt(new Date());
 
         when(topicRepository.findById(1L)).thenReturn(Optional.ofNullable(topic));
 
@@ -76,9 +94,12 @@ public class TopicServiceTest {
 
     @Test
     public void TopicService_UpdateTopicById_ReturnsTopicDto() {
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
+        topic.setOwner(user);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 
@@ -100,7 +121,6 @@ public class TopicServiceTest {
     public void TopicService_DeleteTopicById_ReturnsTopicDto() {
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 

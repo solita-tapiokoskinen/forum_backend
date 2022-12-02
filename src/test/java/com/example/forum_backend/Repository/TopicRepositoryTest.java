@@ -26,7 +26,6 @@ public class TopicRepositoryTest {
         //Arrange
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 
@@ -43,13 +42,11 @@ public class TopicRepositoryTest {
 
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 
         Topic topic2 = new Topic();
         topic2.setTitle("Unit test 2");
-        topic2.setOwner(1L);
         topic2.setCreatedAt(new Date());
         topic2.setUpdatedAt(new Date());
 
@@ -68,7 +65,6 @@ public class TopicRepositoryTest {
 
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 
@@ -84,7 +80,6 @@ public class TopicRepositoryTest {
 
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 
@@ -104,7 +99,6 @@ public class TopicRepositoryTest {
     public void TopicRepository_DeleteTopic_ReturnTopicIsEmpty() {
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 

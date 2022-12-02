@@ -2,6 +2,7 @@ package com.example.forum_backend.Repository;
 
 import com.example.forum_backend.Comment.Comment;
 import com.example.forum_backend.Comment.CommentRepository;
+import com.example.forum_backend.UserEntity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,12 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_SaveAll_ReturnSavedComment() {
 
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(1L);
+        comment.setOwner(user);
         comment.setCreatedAt(new Date());
         comment.setUpdatedAt(new Date());
 
@@ -39,15 +43,18 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_GetAll_ReturnMoreThanOneComment() {
 
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(1L);
+        comment.setOwner(user);
         comment.setCreatedAt(new Date());
         comment.setUpdatedAt(new Date());
 
         Comment comment2 = new Comment();
         comment2.setComment("comment test 2");
-        comment2.setOwner(1L);
+        comment2.setOwner(user);
         comment2.setCreatedAt(new Date());
         comment2.setUpdatedAt(new Date());
 
@@ -63,9 +70,12 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_FindById_ReturnComment() {
 
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(1L);
+        comment.setOwner(user);
         comment.setCreatedAt(new Date());
         comment.setUpdatedAt(new Date());
 
@@ -80,9 +90,12 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_UpdateComment_ReturnCommentNotNull() {
 
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(1L);
+        comment.setOwner(user);
         comment.setCreatedAt(new Date());
         comment.setUpdatedAt(new Date());
 
@@ -101,9 +114,13 @@ public class CommentRepositoryTest {
 
     @Test
     public void CommentRepository_DeleteComment_ReturnEmptyComment() {
+
+        UserEntity user = new UserEntity();
+        user.setId(1L);
+
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(1L);
+        comment.setOwner(user);
         comment.setCreatedAt(new Date());
         comment.setUpdatedAt(new Date());
 

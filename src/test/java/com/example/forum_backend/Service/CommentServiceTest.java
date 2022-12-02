@@ -5,6 +5,8 @@ import com.example.forum_backend.Topic.Topic;
 import com.example.forum_backend.Topic.TopicDto;
 import com.example.forum_backend.Topic.TopicRepository;
 
+import com.example.forum_backend.UserEntity.UserEntity;
+import com.example.forum_backend.UserEntity.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +33,8 @@ public class CommentServiceTest {
     private CommentRepository commentRepository;
     @Mock
     private TopicRepository topicRepository;
+    @Mock
+    private UserRepository userRepository;
     @InjectMocks
     private CommentServiceImpl commentService;
 
@@ -38,30 +42,38 @@ public class CommentServiceTest {
     private TopicDto topicDto;
     private Comment comment;
     private CommentDto commentDto;
+    private UserEntity user;
 
     @BeforeEach
     public void init() {
+        user = new UserEntity();
+        user.setId(1L);
+
         topic = new Topic();
+        topic.setId(1L);
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
+        topic.setOwner(user);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 
         topicDto = new TopicDto();
+        topic.setId(1L);
         topicDto.setTitle("Unit test");
-        topicDto.setOwner_id(1L);
+        topicDto.setOwner_id(user.getId());
         topicDto.setCreatedAt(new Date());
         topicDto.setUpdatedAt(new Date());
 
         comment = new Comment();
         comment.setComment("Unit test");
-        comment.setOwner(1L);
+        comment.setOwner(user);
+        comment.setTopic(topic);
         comment.setCreatedAt(new Date());
         comment.setUpdatedAt(new Date());
 
         commentDto = new CommentDto();
-        commentDto.setOwner(1L);
+        commentDto.setOwner(user.getId());
         commentDto.setComment("Unit test");
+        commentDto.setTopicId(topic.getId());
         commentDto.setCreatedAt(new Date());
         commentDto.setUpdatedAt(new Date());
 
@@ -72,6 +84,7 @@ public class CommentServiceTest {
 
         when(topicRepository.findById(topic.getId())).thenReturn(Optional.of(topic));
         when(commentRepository.save(Mockito.any(Comment.class))).thenReturn(comment);
+        when(userRepository.findById(user.getId())).thenReturn(Optional.ofNullable(user));
 
         CommentDto savedComment = commentService.addComment(topic.getId(), commentDto);
 

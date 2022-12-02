@@ -3,11 +3,13 @@ package com.example.forum_backend.Controller;
 import com.example.forum_backend.Comment.Comment;
 import com.example.forum_backend.Comment.CommentDto;
 import com.example.forum_backend.Topic.*;
+import com.example.forum_backend.UserEntity.UserEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -16,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -24,6 +27,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.Arrays;
 import java.util.Date;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -45,30 +50,38 @@ public class TopicControllerTest {
     private TopicDto topicDto;
     private Comment comment;
     private CommentDto commentDto;
+    private UserEntity user;
 
     @BeforeEach
     public void init() {
+        user = new UserEntity();
+        user.setId(1L);
+
         topic = new Topic();
+        topic.setId(1L);
         topic.setTitle("Unit test");
-        topic.setOwner(1L);
+        topic.setOwner(user);
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
 
         topicDto = new TopicDto();
+        topicDto.setId(1L);
         topicDto.setTitle("Unit test");
-        topicDto.setOwner_id(1L);
+        topicDto.setOwner_id(user.getId());
         topicDto.setCreatedAt(new Date());
         topicDto.setUpdatedAt(new Date());
 
         comment = new Comment();
         comment.setComment("Unit test");
-        comment.setOwner(1L);
+        comment.setOwner(user);
+        comment.setTopic(topic);
         comment.setCreatedAt(new Date());
         comment.setUpdatedAt(new Date());
 
         commentDto = new CommentDto();
-        commentDto.setOwner(1L);
+        commentDto.setOwner(user.getId());
         commentDto.setComment("Unit test");
+        commentDto.setTopicId(topic.getId());
         commentDto.setCreatedAt(new Date());
         commentDto.setUpdatedAt(new Date());
 
@@ -77,7 +90,7 @@ public class TopicControllerTest {
     @Test
     public void TopicController_CreateTopic_ReturnCreated() throws Exception {
 
-        given(topicService.addTopic(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
+        given(topicService.addTopic(any())).willAnswer((invocation -> invocation.getArgument(0)));
 
         ResultActions response = mockMvc.perform(post("/api/topics/add")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -128,19 +141,15 @@ public class TopicControllerTest {
 
     @Test
     public void TopicController_UpdateTopic_ReturnTopicDto() throws Exception {
-        topicDto.setId(1L);
-        TopicResponse responseDto = new TopicResponse();
-        responseDto.setPageNo(1);
-        responseDto.setPageSize(10);
-        responseDto.setLast(true);
-        responseDto.setContent(Arrays.asList(topicDto));
-        when(topicService.updateTopic(topicDto,1L)).thenReturn(topicDto);
+        when(topicService.updateTopic(any(),eq(1L))).thenReturn(topicDto);
 
         ResultActions response = mockMvc.perform(put("/api/topics/{id}/update",1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(topicDto)));
 
-        response.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());;
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title", CoreMatchers.is(topicDto.getTitle())))
+                .andDo(MockMvcResultHandlers.print());;
 
     }
 
