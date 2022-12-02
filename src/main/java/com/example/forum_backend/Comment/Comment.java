@@ -2,6 +2,7 @@ package com.example.forum_backend.Comment;
 
 import javax.persistence.*;
 import com.example.forum_backend.Topic.Topic;
+import com.example.forum_backend.UserEntity.UserEntity;
 
 import java.util.Date;
 
@@ -12,8 +13,9 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private Long owner;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="owner")
+    private UserEntity owner;
     @Column(nullable = false)
     private String comment;
     @Column(nullable = false)
@@ -24,7 +26,7 @@ public class Comment {
     public Comment() {
 
     }
-    public Comment(Long id, Long owner, String comment, Topic topic, Date createdAt, Date updatedAt) {
+    public Comment(Long id, UserEntity owner, String comment, Topic topic, Date createdAt, Date updatedAt) {
         this.id = id;
         this.owner = owner;
         this.comment = comment;
@@ -41,11 +43,11 @@ public class Comment {
         this.id = id;
     }
 
-    public Long getOwner() {
+    public UserEntity getOwner() {
         return owner;
     }
 
-    public void setOwner(Long owner) {
+    public void setOwner(UserEntity owner) {
         this.owner = owner;
     }
 

@@ -1,6 +1,7 @@
 package com.example.forum_backend.Topic;
 
 import com.example.forum_backend.Comment.Comment;
+import com.example.forum_backend.UserEntity.UserEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
@@ -18,8 +19,9 @@ public class Topic {
 
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
-    private Long owner_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    private UserEntity owner_id;
 
     @Column(nullable = false)
     private Date createdAt;
@@ -38,7 +40,7 @@ public class Topic {
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<Comment>();
 
-    public Topic(Long id, String title, Long owner_id, Date createdAt, Date updatedAt, List<Comment> comments) {
+    public Topic(Long id, String title, UserEntity owner_id, Date createdAt, Date updatedAt, List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.owner_id = owner_id;
@@ -67,11 +69,11 @@ public class Topic {
         this.title = title;
     }
 
-    public Long getOwner() {
+    public UserEntity getOwner_id() {
         return owner_id;
     }
 
-    public void setOwner(Long owner_id) {
+    public void setOwner(UserEntity owner_id) {
         this.owner_id = owner_id;
     }
     public Date getCreatedAt() {

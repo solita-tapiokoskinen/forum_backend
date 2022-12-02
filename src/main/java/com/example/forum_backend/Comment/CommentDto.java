@@ -1,5 +1,7 @@
 package com.example.forum_backend.Comment;
 
+import com.example.forum_backend.Topic.Topic;
+
 import java.util.Date;
 
 public class CommentDto {
@@ -9,16 +11,18 @@ public class CommentDto {
     private String comment;
     private Date createdAt;
     private Date updatedAt;
+    private long topicId;
 
     public CommentDto() {
 
     }
-    public CommentDto(Long id, Long owner, String comment, Date createdAt, Date updatedAt) {
+    public CommentDto(Long id, Long owner, String comment, Date createdAt, Date updatedAt, long topicId) {
         this.id = id;
         this.owner = owner;
         this.comment = comment;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.topicId = topicId;
     }
 
     public Long getId() {
@@ -59,12 +63,20 @@ public class CommentDto {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+    public long getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(long topicId) {
+        this.topicId = topicId;
+    }
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", owner=" + owner +
                 ", comment='" + comment + '\'' +
+                ", topic='" + topicId + '\'' +
                 ", created at='" + createdAt + '\'' +
                 ", updated at='" + updatedAt + '\'' +
                 '}';

@@ -1,6 +1,9 @@
 package com.example.forum_backend.Topic;
 
 import com.example.forum_backend.Exceptions.TopicNotFoundException;
+import com.example.forum_backend.Exceptions.UserNotFoundException;
+import com.example.forum_backend.UserEntity.UserEntity;
+import com.example.forum_backend.UserEntity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,16 +18,19 @@ import java.util.stream.Collectors;
 public class TopicServiceImpl implements TopicService{
 
     private TopicRepository topicRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public TopicServiceImpl(TopicRepository topicRepository) {
+    public TopicServiceImpl(TopicRepository topicRepository, UserRepository userRepository) {
         this.topicRepository = topicRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public TopicDto addTopic(TopicDto topicDto) {
+        UserEntity user = userRepository.findById(topicDto.getOwner_id()).orElseThrow(() -> new UserNotFoundException(("User not found")));
         Topic topic = new Topic();
-        topic.setOwner(topicDto.getOwner_id());
+        topic.setOwner(user);
         topic.setTitle(topicDto.getTitle());
         topic.setCreatedAt(new Date());
         topic.setUpdatedAt(new Date());
@@ -79,8 +85,8 @@ public class TopicServiceImpl implements TopicService{
     private TopicDto mapToDto(Topic topic) {
         TopicDto topicDto = new TopicDto();
         topicDto.setId(topic.getId());
-        topicDto.setOwner_id(topic.getOwner());
         topicDto.setTitle(topic.getTitle());
+        topicDto.setOwner_id(topic.getOwner_id().getId());
         topicDto.setCreatedAt(topic.getCreatedAt());
         topicDto.setUpdatedAt(topic.getUpdatedAt());
 
@@ -89,7 +95,6 @@ public class TopicServiceImpl implements TopicService{
 
     private Topic mapToEntity(TopicDto topicDto) {
         Topic topic = new Topic();
-        topic.setOwner(topicDto.getOwner_id());
         topic.setTitle(topicDto.getTitle());
         topic.setCreatedAt(topicDto.getCreatedAt());
         topic.setUpdatedAt(topicDto.getUpdatedAt());

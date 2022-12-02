@@ -2,13 +2,17 @@ package com.example.forum_backend.Comment;
 
 import com.example.forum_backend.Exceptions.CommentNotFoundException;
 import com.example.forum_backend.Exceptions.TopicNotFoundException;
+import com.example.forum_backend.Exceptions.UserNotFoundException;
 import com.example.forum_backend.Topic.Topic;
 import com.example.forum_backend.Topic.TopicDto;
 import com.example.forum_backend.Topic.TopicRepository;
+import com.example.forum_backend.UserEntity.UserEntity;
+import com.example.forum_backend.UserEntity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -20,11 +24,15 @@ public class CommentServiceImpl implements CommentService{
 
     private CommentRepository commentRepository;
     private TopicRepository topicRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, TopicRepository topicRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository,
+                              TopicRepository topicRepository,
+                              UserRepository userRepository) {
         this.commentRepository = commentRepository;
         this.topicRepository = topicRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -91,8 +99,9 @@ public class CommentServiceImpl implements CommentService{
     private CommentDto mapToDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
-        commentDto.setOwner(comment.getOwner());
+        commentDto.setOwner(comment.getOwner().getId());
         commentDto.setComment(comment.getComment());
+        commentDto.setTopicId(comment.getTopic().getId());
         commentDto.setCreatedAt(comment.getCreatedAt());
         commentDto.setUpdatedAt(comment.getUpdatedAt());
 
@@ -103,7 +112,8 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
         comment.setComment(commentDto.getComment());
-        comment.setOwner(commentDto.getOwner());
+        UserEntity user = userRepository.findById(commentDto.getOwner()).orElseThrow(() -> new UserNotFoundException(("User not found")));
+        comment.setOwner(user);
         comment.setCreatedAt(commentDto.getCreatedAt());
         comment.setUpdatedAt(commentDto.getUpdatedAt());
 

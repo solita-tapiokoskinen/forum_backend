@@ -1,17 +1,12 @@
 package com.example.forum_backend.Topic;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
-@RequestMapping(path = "api")
-@CrossOrigin(origins = { "http://localhost:3000" })
+@RequestMapping(path = "/api")
 public class TopicController {
 
     private final TopicService topicService;
@@ -41,13 +36,13 @@ public class TopicController {
         return new ResponseEntity<>(topicService.addTopic(topicDto), HttpStatus.CREATED);
     }
 
-    @PutMapping("topics/{id}/update")
-    public ResponseEntity<TopicDto> updateTopic(@RequestBody TopicDto topicDto, @PathVariable long id) {
+    @PutMapping("/topics/{id}/update")
+    public ResponseEntity<TopicDto> updateTopic(@RequestBody TopicDto topicDto, @PathVariable("id") long id) {
         TopicDto response = topicService.updateTopic(topicDto, id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("topics/{id}/delete")
+    @DeleteMapping("/topics/{id}/delete")
     public ResponseEntity<String> deleteTopic(@PathVariable long id) {
         topicService.deleteTopic(id);
         return new ResponseEntity<>("Topic deleted", HttpStatus.OK);
