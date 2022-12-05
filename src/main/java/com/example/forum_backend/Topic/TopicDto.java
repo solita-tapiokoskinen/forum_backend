@@ -1,5 +1,7 @@
 package com.example.forum_backend.Topic;
 
+import com.example.forum_backend.Comment.Comment;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,16 +11,16 @@ public class TopicDto {
     private Long id;
     private String title;
     private Long owner_id;
+    private String ownerName;
     private Date createdAt;
     private Date updatedAt;
+    private int comments;
 
-
-    private List<Long> comments = new ArrayList<>();
-
-    public TopicDto(Long id, String title, Long owner_id, Date createdAt, Date updatedAt, List<Long> comments) {
+    public TopicDto(Long id, String ownerName, String title, Long owner_id, Date createdAt, Date updatedAt, int comments) {
         this.id = id;
         this.title = title;
         this.owner_id = owner_id;
+        this.ownerName = ownerName;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.comments = comments;
@@ -31,6 +33,13 @@ public class TopicDto {
     }
 
     public void setId(Long id) { this.id = id; }
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
 
     public String getTitle() {
         return title;
@@ -62,11 +71,11 @@ public class TopicDto {
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
-    public List<Long> getComments() {
+    public int getComments() {
         return comments;
     }
 
-    public void setComments(List<Long> comments) {
+    public void setComments(int comments) {
         this.comments = comments;
     }
     @Override
@@ -75,6 +84,7 @@ public class TopicDto {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", owner_id=" + owner_id +
+                ", ownerName=" + ownerName +
                 ", created at=" + createdAt +
                 ", updated at=" + updatedAt +
                 ", comments=" + comments +

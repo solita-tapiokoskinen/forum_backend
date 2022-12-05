@@ -87,6 +87,8 @@ public class TopicServiceImpl implements TopicService{
         topicDto.setId(topic.getId());
         topicDto.setTitle(topic.getTitle());
         topicDto.setOwner_id(topic.getOwner_id().getId());
+        topicDto.setOwnerName(topic.getOwner_id().getUsername());
+        topicDto.setComments(topic.getComments().size());
         topicDto.setCreatedAt(topic.getCreatedAt());
         topicDto.setUpdatedAt(topic.getUpdatedAt());
 
