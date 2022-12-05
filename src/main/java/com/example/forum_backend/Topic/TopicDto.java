@@ -2,6 +2,7 @@ package com.example.forum_backend.Topic;
 
 import com.example.forum_backend.Comment.Comment;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,11 +13,11 @@ public class TopicDto {
     private String title;
     private Long owner_id;
     private String ownerName;
-    private Date createdAt;
-    private Date updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private int comments;
 
-    public TopicDto(Long id, String ownerName, String title, Long owner_id, Date createdAt, Date updatedAt, int comments) {
+    public TopicDto(Long id, String ownerName, String title, Long owner_id, LocalDateTime createdAt, LocalDateTime updatedAt, int comments) {
         this.id = id;
         this.title = title;
         this.owner_id = owner_id;
@@ -56,19 +57,19 @@ public class TopicDto {
     public void setOwner_id(Long owner_id) {
         this.owner_id = owner_id;
     }
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
     public int getComments() {

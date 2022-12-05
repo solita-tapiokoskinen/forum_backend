@@ -5,6 +5,7 @@ import com.example.forum_backend.UserEntity.UserEntity;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,10 +25,10 @@ public class Topic {
     private UserEntity owner_id;
 
     @Column(nullable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     public List<Comment> getComments() {
         return comments;
@@ -40,7 +41,7 @@ public class Topic {
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<Comment>();
 
-    public Topic(Long id, String title, UserEntity owner_id, Date createdAt, Date updatedAt, List<Comment> comments) {
+    public Topic(Long id, String title, UserEntity owner_id, LocalDateTime createdAt, LocalDateTime updatedAt, List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.owner_id = owner_id;
@@ -76,19 +77,19 @@ public class Topic {
     public void setOwner(UserEntity owner_id) {
         this.owner_id = owner_id;
     }
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

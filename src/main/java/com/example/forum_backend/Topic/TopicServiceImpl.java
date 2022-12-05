@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +32,8 @@ public class TopicServiceImpl implements TopicService{
         Topic topic = new Topic();
         topic.setOwner(user);
         topic.setTitle(topicDto.getTitle());
-        topic.setCreatedAt(new Date());
-        topic.setUpdatedAt(new Date());
+        topic.setCreatedAt(LocalDateTime.now());
+        topic.setUpdatedAt(LocalDateTime.now());
 
         Topic newTopic = topicRepository.save(topic);
 
@@ -70,7 +70,7 @@ public class TopicServiceImpl implements TopicService{
         Topic topic = topicRepository.findById(id).orElseThrow(() -> new TopicNotFoundException("Topic not found"));
 
         topic.setTitle(topicDto.getTitle());
-        topic.setUpdatedAt(new Date());
+        topic.setUpdatedAt(LocalDateTime.now());
 
         Topic updatedTopic = topicRepository.save(topic);
         return mapToDto(updatedTopic);

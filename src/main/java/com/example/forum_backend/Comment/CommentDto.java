@@ -2,23 +2,26 @@ package com.example.forum_backend.Comment;
 
 import com.example.forum_backend.Topic.Topic;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class CommentDto {
 
     private Long id;
     private Long owner;
+    private String ownerName;
     private String comment;
-    private Date createdAt;
-    private Date updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     private long topicId;
 
     public CommentDto() {
 
     }
-    public CommentDto(Long id, Long owner, String comment, Date createdAt, Date updatedAt, long topicId) {
+    public CommentDto(Long id, Long owner, String comment, LocalDateTime createdAt, LocalDateTime updatedAt, long topicId, String ownerName) {
         this.id = id;
         this.owner = owner;
+        this.ownerName = ownerName;
         this.comment = comment;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -40,6 +43,13 @@ public class CommentDto {
     public void setOwner(Long owner) {
         this.owner = owner;
     }
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
 
     public String getComment() {
         return comment;
@@ -48,33 +58,34 @@ public class CommentDto {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
     public long getTopicId() {
         return topicId;
     }
-
     public void setTopicId(long topicId) {
         this.topicId = topicId;
     }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", owner=" + owner +
+                ", ownerName=" + ownerName +
                 ", comment='" + comment + '\'' +
                 ", topic='" + topicId + '\'' +
                 ", created at='" + createdAt + '\'' +

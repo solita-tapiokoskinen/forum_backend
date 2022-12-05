@@ -12,10 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,12 +37,14 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public CommentDto addComment(long topicId, CommentDto commentDto) {
         Comment comment = mapToEntity(commentDto);
+        System.out.println("before hello");
 
         Topic topic = topicRepository.findById(topicId).orElseThrow(()->new TopicNotFoundException(("Topic with associated comment not found")));
         comment.setTopic(topic);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUpdatedAt(LocalDateTime.now());
 
+        System.out.println("Hello");
         Comment newComment = commentRepository.save(comment);
 
         return mapToDto(newComment);
@@ -78,7 +79,7 @@ public class CommentServiceImpl implements CommentService{
         }
 
         comment.setComment(commentDto.getComment());
-        comment.setUpdatedAt(new Date());
+        comment.setUpdatedAt(LocalDateTime.now());
 
         Comment updatedComment = commentRepository.save(comment);
         return mapToDto((updatedComment));
@@ -100,6 +101,7 @@ public class CommentServiceImpl implements CommentService{
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
         commentDto.setOwner(comment.getOwner().getId());
+        commentDto.setOwnerName(comment.getOwner().getUsername());
         commentDto.setComment(comment.getComment());
         commentDto.setTopicId(comment.getTopic().getId());
         commentDto.setCreatedAt(comment.getCreatedAt());

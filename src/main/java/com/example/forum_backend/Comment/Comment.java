@@ -4,6 +4,7 @@ import javax.persistence.*;
 import com.example.forum_backend.Topic.Topic;
 import com.example.forum_backend.UserEntity.UserEntity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -19,14 +20,14 @@ public class Comment {
     @Column(nullable = false)
     private String comment;
     @Column(nullable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @Column(nullable = false)
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     public Comment() {
 
     }
-    public Comment(Long id, UserEntity owner, String comment, Topic topic, Date createdAt, Date updatedAt) {
+    public Comment(Long id, UserEntity owner, String comment, Topic topic, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.owner = owner;
         this.comment = comment;
@@ -58,19 +59,19 @@ public class Comment {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
     @Override
