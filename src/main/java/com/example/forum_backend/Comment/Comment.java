@@ -5,7 +5,6 @@ import com.example.forum_backend.Topic.Topic;
 import com.example.forum_backend.UserEntity.UserEntity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "comments")

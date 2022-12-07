@@ -37,14 +37,11 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public CommentDto addComment(long topicId, CommentDto commentDto) {
         Comment comment = mapToEntity(commentDto);
-        System.out.println("before hello");
 
         Topic topic = topicRepository.findById(topicId).orElseThrow(()->new TopicNotFoundException(("Topic with associated comment not found")));
         comment.setTopic(topic);
         comment.setCreatedAt(LocalDateTime.now());
         comment.setUpdatedAt(LocalDateTime.now());
-
-        System.out.println("Hello");
         Comment newComment = commentRepository.save(comment);
 
         return mapToDto(newComment);
