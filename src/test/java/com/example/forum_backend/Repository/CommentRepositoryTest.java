@@ -10,7 +10,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +24,13 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_SaveAll_ReturnSavedComment() {
 
-        UserEntity user = new UserEntity();
-        user.setId(1L);
+        LocalDateTime created = LocalDateTime.now();
+        LocalDateTime updated = LocalDateTime.now();
 
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(user);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(created);
+        comment.setUpdatedAt(updated);
 
         Comment testComment = commentRepository.save(comment);
 
@@ -43,20 +42,17 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_GetAll_ReturnMoreThanOneComment() {
 
-        UserEntity user = new UserEntity();
-        user.setId(1L);
+
 
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(user);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUpdatedAt(LocalDateTime.now());
 
         Comment comment2 = new Comment();
         comment2.setComment("comment test 2");
-        comment2.setOwner(user);
-        comment2.setCreatedAt(new Date());
-        comment2.setUpdatedAt(new Date());
+        comment2.setCreatedAt(LocalDateTime.now());
+        comment2.setUpdatedAt(LocalDateTime.now());
 
         commentRepository.save(comment);
         commentRepository.save(comment2);
@@ -70,14 +66,10 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_FindById_ReturnComment() {
 
-        UserEntity user = new UserEntity();
-        user.setId(1L);
-
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(user);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUpdatedAt(LocalDateTime.now());
 
         Comment testComment = commentRepository.save(comment);
 
@@ -90,20 +82,16 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_UpdateComment_ReturnCommentNotNull() {
 
-        UserEntity user = new UserEntity();
-        user.setId(1L);
-
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(user);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUpdatedAt(LocalDateTime.now());
 
         commentRepository.save(comment);
 
         Comment commentSave = commentRepository.findById(comment.getId()).get();
         commentSave.setComment("Updated comment");
-        commentSave.setUpdatedAt(new Date());
+        commentSave.setUpdatedAt(LocalDateTime.now());
 
         Comment updatedComment = commentRepository.save(commentSave);
 
@@ -115,14 +103,10 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_DeleteComment_ReturnEmptyComment() {
 
-        UserEntity user = new UserEntity();
-        user.setId(1L);
-
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setOwner(user);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUpdatedAt(LocalDateTime.now());
 
         commentRepository.save(comment);
 

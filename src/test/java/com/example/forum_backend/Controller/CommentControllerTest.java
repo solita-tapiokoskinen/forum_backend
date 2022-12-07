@@ -5,27 +5,32 @@ import com.example.forum_backend.Topic.Topic;
 import com.example.forum_backend.Topic.TopicDto;
 import com.example.forum_backend.Topic.TopicResponse;
 import com.example.forum_backend.UserEntity.UserEntity;
+import com.example.forum_backend.security.CustomUserDetailsService;
+import com.example.forum_backend.security.JWTGenerator;
+import com.example.forum_backend.security.JwtAuthEntryPoint;
+import com.example.forum_backend.security.SecurityConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -37,6 +42,12 @@ public class CommentControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
+    CustomUserDetailsService customUserDetailsService;
+    @MockBean
+    JwtAuthEntryPoint jwtAuthEntryPoint;
+    @MockBean
+    JWTGenerator jwtGenerator;
+    @MockBean
     private CommentService commentService;
     @Autowired
     private ObjectMapper objectMapper;
@@ -46,38 +57,30 @@ public class CommentControllerTest {
     private Comment comment;
     private CommentDto commentDto;
 
-    private UserEntity user;
-
     @BeforeEach
     public void init() {
-        user = new UserEntity();
-        user.setId(1L);
 
         topic = new Topic();
         topic.setId(1L);
         topic.setTitle("Unit test");
-        topic.setOwner(user);
-        topic.setCreatedAt(new Date());
-        topic.setUpdatedAt(new Date());
+        topic.setCreatedAt(LocalDateTime.now());
+        topic.setUpdatedAt(LocalDateTime.now());
 
         topicDto = new TopicDto();
         topicDto.setId(1L);
         topicDto.setTitle("Unit test");
-        topicDto.setOwner_id(user.getId());
-        topicDto.setCreatedAt(new Date());
-        topicDto.setUpdatedAt(new Date());
+        topicDto.setCreatedAt(LocalDateTime.now());
+        topicDto.setUpdatedAt(LocalDateTime.now());
 
         comment = new Comment();
         comment.setComment("Unit test");
-        comment.setOwner(user);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUpdatedAt(LocalDateTime.now());
 
         commentDto = new CommentDto();
-        commentDto.setOwner(user.getId());
         commentDto.setComment("Unit test");
-        commentDto.setCreatedAt(new Date());
-        commentDto.setUpdatedAt(new Date());
+        commentDto.setCreatedAt(LocalDateTime.now());
+        commentDto.setUpdatedAt(LocalDateTime.now());
 
     }
 

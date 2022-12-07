@@ -4,6 +4,9 @@ import com.example.forum_backend.Comment.Comment;
 import com.example.forum_backend.Comment.CommentDto;
 import com.example.forum_backend.Topic.*;
 import com.example.forum_backend.UserEntity.UserEntity;
+import com.example.forum_backend.security.CustomUserDetailsService;
+import com.example.forum_backend.security.JWTGenerator;
+import com.example.forum_backend.security.JwtAuthEntryPoint;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,6 +27,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -36,11 +40,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @WebMvcTest(controllers = TopicController.class)
 @AutoConfigureMockMvc(addFilters = false)
-@ExtendWith(MockitoExtension.class)
 public class TopicControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @MockBean
+    CustomUserDetailsService customUserDetailsService;
+    @MockBean
+    JwtAuthEntryPoint jwtAuthEntryPoint;
+    @MockBean
+    JWTGenerator jwtGenerator;
     @MockBean
     private TopicService topicService;
     @Autowired
@@ -61,29 +70,29 @@ public class TopicControllerTest {
         topic.setId(1L);
         topic.setTitle("Unit test");
         topic.setOwner(user);
-        topic.setCreatedAt(new Date());
-        topic.setUpdatedAt(new Date());
+        topic.setCreatedAt(LocalDateTime.now());
+        topic.setUpdatedAt(LocalDateTime.now());
 
         topicDto = new TopicDto();
         topicDto.setId(1L);
         topicDto.setTitle("Unit test");
         topicDto.setOwner_id(user.getId());
-        topicDto.setCreatedAt(new Date());
-        topicDto.setUpdatedAt(new Date());
+        topicDto.setCreatedAt(LocalDateTime.now());
+        topicDto.setUpdatedAt(LocalDateTime.now());
 
         comment = new Comment();
         comment.setComment("Unit test");
         comment.setOwner(user);
         comment.setTopic(topic);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUpdatedAt(LocalDateTime.now());
 
         commentDto = new CommentDto();
         commentDto.setOwner(user.getId());
         commentDto.setComment("Unit test");
         commentDto.setTopicId(topic.getId());
-        commentDto.setCreatedAt(new Date());
-        commentDto.setUpdatedAt(new Date());
+        commentDto.setCreatedAt(LocalDateTime.now());
+        commentDto.setUpdatedAt(LocalDateTime.now());
 
     }
 

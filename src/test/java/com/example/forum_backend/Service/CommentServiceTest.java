@@ -18,6 +18,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
@@ -53,29 +54,29 @@ public class CommentServiceTest {
         topic.setId(1L);
         topic.setTitle("Unit test");
         topic.setOwner(user);
-        topic.setCreatedAt(new Date());
-        topic.setUpdatedAt(new Date());
+        topic.setCreatedAt(LocalDateTime.now());
+        topic.setUpdatedAt(LocalDateTime.now());
 
         topicDto = new TopicDto();
         topic.setId(1L);
         topicDto.setTitle("Unit test");
         topicDto.setOwner_id(user.getId());
-        topicDto.setCreatedAt(new Date());
-        topicDto.setUpdatedAt(new Date());
+        topicDto.setCreatedAt(LocalDateTime.now());
+        topicDto.setUpdatedAt(LocalDateTime.now());
 
         comment = new Comment();
         comment.setComment("Unit test");
         comment.setOwner(user);
         comment.setTopic(topic);
-        comment.setCreatedAt(new Date());
-        comment.setUpdatedAt(new Date());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUpdatedAt(LocalDateTime.now());
 
         commentDto = new CommentDto();
         commentDto.setOwner(user.getId());
         commentDto.setComment("Unit test");
         commentDto.setTopicId(topic.getId());
-        commentDto.setCreatedAt(new Date());
-        commentDto.setUpdatedAt(new Date());
+        commentDto.setCreatedAt(LocalDateTime.now());
+        commentDto.setUpdatedAt(LocalDateTime.now());
 
     }
 
