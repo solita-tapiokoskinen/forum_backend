@@ -30,19 +30,19 @@ public class TopicController {
         return ResponseEntity.ok(topicService.getTopicById(id));
     }
 
-    @PostMapping("/topics/add")
+    @PostMapping("/topics")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<TopicDto> addTopic(@RequestBody TopicDto topicDto) {
         return new ResponseEntity<>(topicService.addTopic(topicDto), HttpStatus.CREATED);
     }
 
-    @PutMapping("/topics/{id}/update")
+    @PutMapping("/topics/{id}")
     public ResponseEntity<TopicDto> updateTopic(@RequestBody TopicDto topicDto, @PathVariable("id") long id) {
         TopicDto response = topicService.updateTopic(topicDto, id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/topics/{id}/delete")
+    @DeleteMapping("/topics/{id}")
     public ResponseEntity<String> deleteTopic(@PathVariable long id) {
         topicService.deleteTopic(id);
         return new ResponseEntity<>("Topic deleted", HttpStatus.OK);
