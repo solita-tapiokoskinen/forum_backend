@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -36,6 +38,11 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public CommentDto addComment(long topicId, CommentDto commentDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        UserEntity user = userRepository.findByUsername(currentPrincipalName).orElseThrow(() -> new UserNotFoundException(("User not found")));
+        commentDto.setOwner(user.getId());
+        commentDto.setOwnerName(currentPrincipalName);
         Comment comment = mapToEntity(commentDto);
 
         Topic topic = topicRepository.findById(topicId).orElseThrow(()->new TopicNotFoundException(("Topic with associated comment not found")));
