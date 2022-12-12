@@ -1,6 +1,7 @@
 package com.example.forum_backend.Topic;
 
 import com.example.forum_backend.Exceptions.TopicNotFoundException;
+import com.example.forum_backend.Exceptions.UnathorizedException;
 import com.example.forum_backend.Exceptions.UserNotFoundException;
 import com.example.forum_backend.UserEntity.UserEntity;
 import com.example.forum_backend.UserEntity.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,11 +75,20 @@ public class TopicServiceImpl implements TopicService{
     public TopicDto updateTopic(TopicDto topicDto, long id) {
         Topic topic = topicRepository.findById(id).orElseThrow(() -> new TopicNotFoundException("Topic not found"));
 
-        topic.setTitle(topicDto.getTitle());
-        topic.setUpdatedAt(LocalDateTime.now());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        UserEntity user = userRepository.findByUsername(currentPrincipalName).orElseThrow(() -> new UserNotFoundException(("User not found")));
 
-        Topic updatedTopic = topicRepository.save(topic);
-        return mapToDto(updatedTopic);
+        if (Objects.equals(topic.getOwner_id().getId(), user.getId())){
+            topic.setTitle(topicDto.getTitle());
+            topic.setUpdatedAt(LocalDateTime.now());
+
+            Topic updatedTopic = topicRepository.save(topic);
+            return mapToDto(updatedTopic);
+        }
+        else {
+            throw new UnathorizedException("User does not own this topic");
+        }
     }
 
     @Override
