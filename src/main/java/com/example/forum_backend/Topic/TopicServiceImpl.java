@@ -79,7 +79,7 @@ public class TopicServiceImpl implements TopicService{
         String currentPrincipalName = authentication.getName();
         UserEntity user = userRepository.findByUsername(currentPrincipalName).orElseThrow(() -> new UserNotFoundException(("User not found")));
 
-        if (Objects.equals(topic.getOwner_id().getId(), user.getId())){
+        if (Objects.equals(topic.getOwnerEntity().getId(), user.getId())){
             topic.setTitle(topicDto.getTitle());
             topic.setUpdatedAt(LocalDateTime.now());
 
@@ -101,8 +101,8 @@ public class TopicServiceImpl implements TopicService{
         TopicDto topicDto = new TopicDto();
         topicDto.setId(topic.getId());
         topicDto.setTitle(topic.getTitle());
-        topicDto.setOwner_id(topic.getOwner_id().getId());
-        topicDto.setOwnerName(topic.getOwner_id().getUsername());
+        topicDto.setOwner_id(topic.getOwnerEntity().getId());
+        topicDto.setOwnerName(topic.getOwnerEntity().getUsername());
         topicDto.setComments(topic.getComments().size());
         topicDto.setCreatedAt(topic.getCreatedAt());
         topicDto.setUpdatedAt(topic.getUpdatedAt());

@@ -22,7 +22,7 @@ public class Topic {
     private String title;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
-    private UserEntity owner_id;
+    private UserEntity ownerEntity;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -41,10 +41,10 @@ public class Topic {
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<Comment>();
 
-    public Topic(Long id, String title, UserEntity owner_id, LocalDateTime createdAt, LocalDateTime updatedAt, List<Comment> comments) {
+    public Topic(Long id, String title, UserEntity ownerEntity, LocalDateTime createdAt, LocalDateTime updatedAt, List<Comment> comments) {
         this.id = id;
         this.title = title;
-        this.owner_id = owner_id;
+        this.ownerEntity = ownerEntity;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.comments = comments;
@@ -70,12 +70,12 @@ public class Topic {
         this.title = title;
     }
 
-    public UserEntity getOwner_id() {
-        return owner_id;
+    public UserEntity getOwnerEntity() {
+        return ownerEntity;
     }
 
     public void setOwner(UserEntity owner_id) {
-        this.owner_id = owner_id;
+        this.ownerEntity = owner_id;
     }
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -98,7 +98,7 @@ public class Topic {
         return "Topic{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", owner='" + owner_id + '\'' +
+                ", owner='" + ownerEntity + '\'' +
                 ", created='" + createdAt + '\'' +
                 ", updated='" + updatedAt + '\'' +
                 ", comments='" + comments + '\'' +

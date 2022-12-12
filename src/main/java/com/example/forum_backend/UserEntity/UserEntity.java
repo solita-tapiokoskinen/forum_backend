@@ -100,7 +100,7 @@ public class UserEntity {
         this.topics = topics;
     }
 
-    @OneToMany(mappedBy = "owner_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "ownerEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Topic> topics = new ArrayList<>();
 
     public List<Comment> getComments() {
