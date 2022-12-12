@@ -101,7 +101,7 @@ public class TopicControllerTest {
 
         given(topicService.addTopic(any())).willAnswer((invocation -> invocation.getArgument(0)));
 
-        ResultActions response = mockMvc.perform(post("/api/topics/add")
+        ResultActions response = mockMvc.perform(post("/api/topics")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(topicDto)));
 
@@ -152,7 +152,7 @@ public class TopicControllerTest {
     public void TopicController_UpdateTopic_ReturnTopicDto() throws Exception {
         when(topicService.updateTopic(any(),eq(1L))).thenReturn(topicDto);
 
-        ResultActions response = mockMvc.perform(put("/api/topics/{id}/update",1L)
+        ResultActions response = mockMvc.perform(put("/api/topics/{id}",1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(topicDto)));
 
@@ -167,7 +167,7 @@ public class TopicControllerTest {
         Long id = 1L;
         doNothing().when(topicService).deleteTopic(id);
 
-        ResultActions response = mockMvc.perform(delete("/api/topics/1/delete")
+        ResultActions response = mockMvc.perform(delete("/api/topics/1")
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andExpect(MockMvcResultMatchers.status().isOk())
