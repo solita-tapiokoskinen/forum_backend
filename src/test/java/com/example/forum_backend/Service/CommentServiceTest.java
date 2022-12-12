@@ -17,6 +17,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -36,6 +39,10 @@ public class CommentServiceTest {
     private TopicRepository topicRepository;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    Authentication authentication = Mockito.mock(Authentication.class);
+    @Mock
+    SecurityContext securityContext = Mockito.mock(SecurityContext.class);
     @InjectMocks
     private CommentServiceImpl commentService;
 
@@ -83,6 +90,11 @@ public class CommentServiceTest {
     @Test
     public void CommentService_CreateComment_ReturnsCommentDto() {
 
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        when(authentication.getName()).thenReturn(user.getUsername());
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+
         when(topicRepository.findById(topic.getId())).thenReturn(Optional.of(topic));
         when(commentRepository.save(Mockito.any(Comment.class))).thenReturn(comment);
         when(userRepository.findById(user.getId())).thenReturn(Optional.ofNullable(user));
@@ -108,6 +120,12 @@ public class CommentServiceTest {
 
     @Test
     public void CommentService_UpdatedComment_ReturnCommentDto() {
+
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        when(authentication.getName()).thenReturn(user.getUsername());
+        when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
+
         long topicId = 1L;
         long commentId = 1L;
         topic.setComments(Arrays.asList(comment));

@@ -73,12 +73,16 @@ public class CommentControllerTest {
         topicDto.setUpdatedAt(LocalDateTime.now());
 
         comment = new Comment();
+        comment.setId(1L);
         comment.setComment("Unit test");
+        comment.setTopic(topic);
         comment.setCreatedAt(LocalDateTime.now());
         comment.setUpdatedAt(LocalDateTime.now());
 
         commentDto = new CommentDto();
+        commentDto.setId(1L);
         commentDto.setComment("Unit test");
+        commentDto.setTopicId(comment.getTopic().getId());
         commentDto.setCreatedAt(LocalDateTime.now());
         commentDto.setUpdatedAt(LocalDateTime.now());
 
@@ -118,6 +122,22 @@ public class CommentControllerTest {
                 .content(objectMapper.writeValueAsString(commentDto)));
 
         response.andExpect(MockMvcResultMatchers.status().isCreated())
+                //.andExpect(MockMvcResultMatchers.jsonPath("$.comment", CoreMatchers.is(commentDto.getComment())))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    public void CommentController_UpdateComment_ReturnCommentDto() throws Exception {
+
+        long topicId = 1L;
+        when(commentService.updateComment(commentDto, commentDto.getTopicId(), comment.getId())).thenReturn(commentDto);
+
+        ResultActions response = mockMvc.perform(put("/api/topics/1/comments/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(commentDto)));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk())
                 //.andExpect(MockMvcResultMatchers.jsonPath("$.comment", CoreMatchers.is(commentDto.getComment())))
                 .andDo(MockMvcResultHandlers.print());
 
