@@ -2,9 +2,9 @@ package com.example.forum_backend.Comment;
 
 import com.example.forum_backend.Exceptions.CommentNotFoundException;
 import com.example.forum_backend.Exceptions.TopicNotFoundException;
+import com.example.forum_backend.Exceptions.UnathorizedException;
 import com.example.forum_backend.Exceptions.UserNotFoundException;
 import com.example.forum_backend.Topic.Topic;
-import com.example.forum_backend.Topic.TopicDto;
 import com.example.forum_backend.Topic.TopicRepository;
 import com.example.forum_backend.UserEntity.UserEntity;
 import com.example.forum_backend.UserEntity.UserRepository;
@@ -80,6 +80,14 @@ public class CommentServiceImpl implements CommentService{
 
         if(comment.getTopic().getId() != topic.getId()) {
             throw new CommentNotFoundException("This comment does not belong to a topic");
+        }
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        UserEntity user = userRepository.findByUsername(currentPrincipalName).orElseThrow(() -> new UserNotFoundException(("User not found")));
+
+        if (comment.getOwner().getId() != user.getId()) {
+            throw new UnathorizedException("You do not own this comment");
         }
 
         comment.setComment(commentDto.getComment());
