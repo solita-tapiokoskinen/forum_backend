@@ -2,10 +2,13 @@ package com.example.forum_backend.Topic;
 
 import com.example.forum_backend.Comment.Comment;
 import com.example.forum_backend.UserEntity.UserEntity;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +27,12 @@ public class Topic {
     private UserEntity ownerEntity;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    @CreationTimestamp
+    private ZonedDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    @UpdateTimestamp
+    private ZonedDateTime updatedAt;
 
     public List<Comment> getComments() {
         return comments;
@@ -40,7 +45,7 @@ public class Topic {
     @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<Comment>();
 
-    public Topic(Long id, String title, UserEntity ownerEntity, LocalDateTime createdAt, LocalDateTime updatedAt, List<Comment> comments) {
+    public Topic(Long id, String title, UserEntity ownerEntity, ZonedDateTime createdAt, ZonedDateTime updatedAt, List<Comment> comments) {
         this.id = id;
         this.title = title;
         this.ownerEntity = ownerEntity;
@@ -76,19 +81,19 @@ public class Topic {
     public void setOwner(UserEntity owner_id) {
         this.ownerEntity = owner_id;
     }
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public ZonedDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

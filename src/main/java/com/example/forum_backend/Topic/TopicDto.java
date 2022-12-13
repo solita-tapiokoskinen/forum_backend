@@ -1,6 +1,7 @@
 package com.example.forum_backend.Topic;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class TopicDto {
 
@@ -8,11 +9,11 @@ public class TopicDto {
     private String title;
     private Long owner_id;
     private String ownerName;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime updatedAt;
     private int comments;
 
-    public TopicDto(Long id, String ownerName, String title, Long owner_id, LocalDateTime createdAt, LocalDateTime updatedAt, int comments) {
+    public TopicDto(Long id, String ownerName, String title, Long owner_id, ZonedDateTime createdAt, ZonedDateTime updatedAt, int comments) {
         this.id = id;
         this.title = title;
         this.owner_id = owner_id;
@@ -52,19 +53,19 @@ public class TopicDto {
     public void setOwner_id(Long owner_id) {
         this.owner_id = owner_id;
     }
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public ZonedDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
     public int getComments() {

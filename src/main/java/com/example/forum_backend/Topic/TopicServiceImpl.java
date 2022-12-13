@@ -13,7 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -38,8 +39,8 @@ public class TopicServiceImpl implements TopicService{
         Topic topic = new Topic();
         topic.setOwner(user);
         topic.setTitle(topicDto.getTitle());
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
+        topic.setUpdatedAt(ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
 
         Topic newTopic = topicRepository.save(topic);
 
@@ -81,7 +82,7 @@ public class TopicServiceImpl implements TopicService{
 
         if (Objects.equals(topic.getOwnerEntity().getId(), user.getId())){
             topic.setTitle(topicDto.getTitle());
-            topic.setUpdatedAt(LocalDateTime.now());
+            topic.setUpdatedAt(ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
 
             Topic updatedTopic = topicRepository.save(topic);
             return mapToDto(updatedTopic);
