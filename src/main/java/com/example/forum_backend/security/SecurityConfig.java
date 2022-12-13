@@ -48,6 +48,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/topics/{id}").hasAuthority("ADMIN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
