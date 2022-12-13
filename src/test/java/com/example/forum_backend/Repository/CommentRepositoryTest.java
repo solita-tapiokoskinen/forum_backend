@@ -9,7 +9,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +23,8 @@ public class CommentRepositoryTest {
     @Test
     public void CommentRepository_SaveAll_ReturnSavedComment() {
 
-        LocalDateTime created = LocalDateTime.now();
-        LocalDateTime updated = LocalDateTime.now();
+        ZonedDateTime created = ZonedDateTime.now();
+        ZonedDateTime updated = ZonedDateTime.now();
 
         Comment comment = new Comment();
         comment.setComment("comment test");
@@ -45,13 +45,13 @@ public class CommentRepositoryTest {
 
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setCreatedAt(LocalDateTime.now());
-        comment.setUpdatedAt(LocalDateTime.now());
+        comment.setCreatedAt(ZonedDateTime.now());
+        comment.setUpdatedAt(ZonedDateTime.now());
 
         Comment comment2 = new Comment();
         comment2.setComment("comment test 2");
-        comment2.setCreatedAt(LocalDateTime.now());
-        comment2.setUpdatedAt(LocalDateTime.now());
+        comment2.setCreatedAt(ZonedDateTime.now());
+        comment2.setUpdatedAt(ZonedDateTime.now());
 
         commentRepository.save(comment);
         commentRepository.save(comment2);
@@ -67,8 +67,8 @@ public class CommentRepositoryTest {
 
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setCreatedAt(LocalDateTime.now());
-        comment.setUpdatedAt(LocalDateTime.now());
+        comment.setCreatedAt(ZonedDateTime.now());
+        comment.setUpdatedAt(ZonedDateTime.now());
 
         Comment testComment = commentRepository.save(comment);
 
@@ -83,14 +83,14 @@ public class CommentRepositoryTest {
 
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setCreatedAt(LocalDateTime.now());
-        comment.setUpdatedAt(LocalDateTime.now());
+        comment.setCreatedAt(ZonedDateTime.now());
+        comment.setUpdatedAt(ZonedDateTime.now());
 
         commentRepository.save(comment);
 
         Comment commentSave = commentRepository.findById(comment.getId()).get();
         commentSave.setComment("Updated comment");
-        commentSave.setUpdatedAt(LocalDateTime.now());
+        commentSave.setUpdatedAt(ZonedDateTime.now());
 
         Comment updatedComment = commentRepository.save(commentSave);
 
@@ -104,8 +104,8 @@ public class CommentRepositoryTest {
 
         Comment comment = new Comment();
         comment.setComment("comment test");
-        comment.setCreatedAt(LocalDateTime.now());
-        comment.setUpdatedAt(LocalDateTime.now());
+        comment.setCreatedAt(ZonedDateTime.now());
+        comment.setUpdatedAt(ZonedDateTime.now());
 
         commentRepository.save(comment);
 

@@ -9,7 +9,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +26,8 @@ public class TopicRepositoryTest {
         //Arrange
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         //Act
         Topic testTopic = topicRepository.save(topic);
@@ -42,13 +42,13 @@ public class TopicRepositoryTest {
 
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         Topic topic2 = new Topic();
         topic2.setTitle("Unit test 2");
-        topic2.setCreatedAt(LocalDateTime.now());
-        topic2.setUpdatedAt(LocalDateTime.now());
+        topic2.setCreatedAt(ZonedDateTime.now());
+        topic2.setUpdatedAt(ZonedDateTime.now());
 
         topicRepository.save(topic);
         topicRepository.save(topic2);
@@ -65,8 +65,8 @@ public class TopicRepositoryTest {
 
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         Topic testTopic = topicRepository.save(topic);
 
@@ -80,14 +80,14 @@ public class TopicRepositoryTest {
 
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         topicRepository.save(topic);
 
         Topic topicSave = topicRepository.findById(topic.getId()).get();
         topicSave.setTitle("Updated title");
-        topicSave.setUpdatedAt(LocalDateTime.now());
+        topicSave.setUpdatedAt(ZonedDateTime.now());
 
         Topic updatedTopic = topicRepository.save(topicSave);
 
@@ -99,8 +99,8 @@ public class TopicRepositoryTest {
     public void TopicRepository_DeleteTopic_ReturnTopicIsEmpty() {
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         topicRepository.save(topic);
 

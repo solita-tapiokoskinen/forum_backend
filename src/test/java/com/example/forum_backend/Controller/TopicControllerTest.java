@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -63,29 +63,29 @@ public class TopicControllerTest {
         topic.setId(1L);
         topic.setTitle("Unit test");
         topic.setOwner(user);
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         topicDto = new TopicDto();
         topicDto.setId(1L);
         topicDto.setTitle("Unit test");
         topicDto.setOwner_id(user.getId());
-        topicDto.setCreatedAt(LocalDateTime.now());
-        topicDto.setUpdatedAt(LocalDateTime.now());
+        topicDto.setCreatedAt(ZonedDateTime.now());
+        topicDto.setUpdatedAt(ZonedDateTime.now());
 
         comment = new Comment();
         comment.setComment("Unit test");
         comment.setOwner(user);
         comment.setTopic(topic);
-        comment.setCreatedAt(LocalDateTime.now());
-        comment.setUpdatedAt(LocalDateTime.now());
+        comment.setCreatedAt(ZonedDateTime.now());
+        comment.setUpdatedAt(ZonedDateTime.now());
 
         commentDto = new CommentDto();
         commentDto.setOwner(user.getId());
         commentDto.setComment("Unit test");
         commentDto.setTopicId(topic.getId());
-        commentDto.setCreatedAt(LocalDateTime.now());
-        commentDto.setUpdatedAt(LocalDateTime.now());
+        commentDto.setCreatedAt(ZonedDateTime.now());
+        commentDto.setUpdatedAt(ZonedDateTime.now());
 
     }
 

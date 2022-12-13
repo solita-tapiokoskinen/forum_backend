@@ -16,7 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -49,14 +49,14 @@ public class TopicServiceTest {
         Topic topic = new Topic();
         topic.setTitle("Unit test");
         topic.setOwner(user);
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         TopicDto topicDto = new TopicDto();
         topicDto.setTitle("Unit test");
         topicDto.setOwner_id(1L);
-        topicDto.setCreatedAt(LocalDateTime.now());
-        topicDto.setUpdatedAt(LocalDateTime.now());
+        topicDto.setCreatedAt(ZonedDateTime.now());
+        topicDto.setUpdatedAt(ZonedDateTime.now());
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
@@ -89,14 +89,14 @@ public class TopicServiceTest {
         Topic topic = new Topic();
         topic.setTitle("Unit test");
         topic.setOwner(user);
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         TopicDto topicDto = new TopicDto();
         topicDto.setTitle("Unit test");
         topicDto.setOwner_id(1L);
-        topicDto.setCreatedAt(LocalDateTime.now());
-        topicDto.setUpdatedAt(LocalDateTime.now());
+        topicDto.setCreatedAt(ZonedDateTime.now());
+        topicDto.setUpdatedAt(ZonedDateTime.now());
 
         when(topicRepository.findById(1L)).thenReturn(Optional.ofNullable(topic));
 
@@ -113,14 +113,14 @@ public class TopicServiceTest {
         Topic topic = new Topic();
         topic.setTitle("Unit test");
         topic.setOwner(user);
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         TopicDto topicDto = new TopicDto();
         topicDto.setTitle("Unit test");
         topicDto.setOwner_id(1L);
-        topicDto.setCreatedAt(LocalDateTime.now());
-        topicDto.setUpdatedAt(LocalDateTime.now());
+        topicDto.setCreatedAt(ZonedDateTime.now());
+        topicDto.setUpdatedAt(ZonedDateTime.now());
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         SecurityContextHolder.setContext(securityContext);
@@ -140,8 +140,8 @@ public class TopicServiceTest {
     public void TopicService_DeleteTopicById_ReturnsTopicDto() {
         Topic topic = new Topic();
         topic.setTitle("Unit test");
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         when(topicRepository.findById(1L)).thenReturn(Optional.ofNullable(topic));
 

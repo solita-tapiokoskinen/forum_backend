@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.doNothing;
@@ -55,28 +55,28 @@ public class CommentControllerTest {
         topic = new Topic();
         topic.setId(1L);
         topic.setTitle("Unit test");
-        topic.setCreatedAt(LocalDateTime.now());
-        topic.setUpdatedAt(LocalDateTime.now());
+        topic.setCreatedAt(ZonedDateTime.now());
+        topic.setUpdatedAt(ZonedDateTime.now());
 
         topicDto = new TopicDto();
         topicDto.setId(1L);
         topicDto.setTitle("Unit test");
-        topicDto.setCreatedAt(LocalDateTime.now());
-        topicDto.setUpdatedAt(LocalDateTime.now());
+        topicDto.setCreatedAt(ZonedDateTime.now());
+        topicDto.setUpdatedAt(ZonedDateTime.now());
 
         comment = new Comment();
         comment.setId(1L);
         comment.setComment("Unit test");
         comment.setTopic(topic);
-        comment.setCreatedAt(LocalDateTime.now());
-        comment.setUpdatedAt(LocalDateTime.now());
+        comment.setCreatedAt(ZonedDateTime.now());
+        comment.setUpdatedAt(ZonedDateTime.now());
 
         commentDto = new CommentDto();
         commentDto.setId(1L);
         commentDto.setComment("Unit test");
         commentDto.setTopicId(comment.getTopic().getId());
-        commentDto.setCreatedAt(LocalDateTime.now());
-        commentDto.setUpdatedAt(LocalDateTime.now());
+        commentDto.setCreatedAt(ZonedDateTime.now());
+        commentDto.setUpdatedAt(ZonedDateTime.now());
 
     }
 
