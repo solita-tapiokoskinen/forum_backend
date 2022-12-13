@@ -105,8 +105,8 @@ public class TopicServiceImpl implements TopicService{
         topicDto.setOwner_id(topic.getOwnerEntity().getId());
         topicDto.setOwnerName(topic.getOwnerEntity().getUsername());
         topicDto.setComments(topic.getComments().size());
-        topicDto.setCreatedAt(topic.getCreatedAt());
-        topicDto.setUpdatedAt(topic.getUpdatedAt());
+        topicDto.setCreatedAt(topic.getCreatedAt().withZoneSameInstant(ZoneId.of("UTC")));
+        topicDto.setUpdatedAt(topic.getUpdatedAt().withZoneSameInstant(ZoneId.of("UTC")));
 
         return topicDto;
     }
