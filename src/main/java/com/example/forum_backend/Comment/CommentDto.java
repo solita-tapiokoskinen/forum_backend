@@ -1,6 +1,6 @@
 package com.example.forum_backend.Comment;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 public class CommentDto {
 
@@ -8,14 +8,14 @@ public class CommentDto {
     private Long owner;
     private String ownerName;
     private String comment;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime updatedAt;
     private long topicId;
 
     public CommentDto() {
 
     }
-    public CommentDto(Long id, Long owner, String comment, LocalDateTime createdAt, LocalDateTime updatedAt, long topicId, String ownerName) {
+    public CommentDto(Long id, Long owner, String comment, ZonedDateTime createdAt, ZonedDateTime updatedAt, long topicId, String ownerName) {
         this.id = id;
         this.owner = owner;
         this.ownerName = ownerName;
@@ -55,19 +55,19 @@ public class CommentDto {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public ZonedDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
     public long getTopicId() {

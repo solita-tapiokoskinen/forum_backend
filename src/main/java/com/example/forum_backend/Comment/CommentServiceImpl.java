@@ -16,7 +16,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,8 +48,8 @@ public class CommentServiceImpl implements CommentService{
 
         Topic topic = topicRepository.findById(topicId).orElseThrow(()->new TopicNotFoundException(("Topic with associated comment not found")));
         comment.setTopic(topic);
-        comment.setCreatedAt(LocalDateTime.now());
-        comment.setUpdatedAt(LocalDateTime.now());
+        comment.setCreatedAt(ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
+        comment.setUpdatedAt(ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
         Comment newComment = commentRepository.save(comment);
 
         return mapToDto(newComment);
@@ -91,7 +92,7 @@ public class CommentServiceImpl implements CommentService{
         }
 
         comment.setComment(commentDto.getComment());
-        comment.setUpdatedAt(LocalDateTime.now());
+        comment.setUpdatedAt(ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")));
 
         Comment updatedComment = commentRepository.save(comment);
         return mapToDto((updatedComment));
@@ -116,8 +117,8 @@ public class CommentServiceImpl implements CommentService{
         commentDto.setOwnerName(comment.getOwner().getUsername());
         commentDto.setComment(comment.getComment());
         commentDto.setTopicId(comment.getTopic().getId());
-        commentDto.setCreatedAt(comment.getCreatedAt());
-        commentDto.setUpdatedAt(comment.getUpdatedAt());
+        commentDto.setCreatedAt(comment.getCreatedAt().withZoneSameInstant(ZoneId.of("UTC")));
+        commentDto.setUpdatedAt(comment.getUpdatedAt().withZoneSameInstant(ZoneId.of("UTC")));
 
         return commentDto;
     }

@@ -3,8 +3,10 @@ package com.example.forum_backend.Comment;
 import javax.persistence.*;
 import com.example.forum_backend.Topic.Topic;
 import com.example.forum_backend.UserEntity.UserEntity;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "comments")
@@ -19,14 +21,16 @@ public class Comment {
     @Column(nullable = false)
     private String comment;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    @CreationTimestamp
+    private ZonedDateTime createdAt;
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    @UpdateTimestamp
+    private ZonedDateTime updatedAt;
 
     public Comment() {
 
     }
-    public Comment(Long id, UserEntity owner, String comment, Topic topic, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Comment(Long id, UserEntity owner, String comment, Topic topic, ZonedDateTime createdAt, ZonedDateTime updatedAt) {
         this.id = id;
         this.owner = owner;
         this.comment = comment;
@@ -58,19 +62,19 @@ public class Comment {
     public void setComment(String comment) {
         this.comment = comment;
     }
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(ZonedDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public ZonedDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
     @Override
