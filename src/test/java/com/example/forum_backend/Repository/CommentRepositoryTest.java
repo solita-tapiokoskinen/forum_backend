@@ -2,7 +2,6 @@ package com.example.forum_backend.Repository;
 
 import com.example.forum_backend.Comment.Comment;
 import com.example.forum_backend.Comment.CommentRepository;
-import com.example.forum_backend.UserEntity.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.assertj.core.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;

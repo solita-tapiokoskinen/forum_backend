@@ -1,9 +1,6 @@
 package com.example.forum_backend.Comment;
 
-import com.example.forum_backend.Topic.Topic;
-
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class CommentDto {
 

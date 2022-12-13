@@ -1,11 +1,6 @@
 package com.example.forum_backend.Topic;
 
-import com.example.forum_backend.Comment.Comment;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class TopicDto {
 
