@@ -16,12 +16,20 @@ This is part of the DevAcademy practical assignment, the a Spring Boot REST API 
 All accesspoints start with localhost:8080/api
 <ul>
   <li>/auth/register - Methods: POST</li>
+  body { "username": username, "email": email, "password": password }
   <li>/auth/login - Methods: POST</li>
-  <li>/topics - Methods: GET</li>
-  <li>/topics/{id} - Methods: GET, POST, PUT, DELETE</li>
-  <li>/topics/{id}/comments - Methods: GET</li>
-  <li>/topics/{id}/comments/{id} - Methods: GET, POST, PUT, DELETE</li>
+  body { "username": username, "password": password }
+  <li>/topics - Methods: GET, POST</li>
+  POST body { "title": yourtitle }
+  <li>/topics/{id} - Methods: GET, PUT, DELETE</li>
+  PUT body { "title": yourtitle }
+  <li>/topics/{id}/comments - Methods: GET, POST</li>
+  POST body { "comment": yourcomment }
+  <li>/topics/{id}/comments/{id} - Methods: PUT, DELETE</li>
+  PUT body { "comment": yourcomment }
   </ul>
+
+Username is parsed from a valid JWT-token, that will determine if a comment or a topic is owned by the user.
 
 ## Database
 
@@ -42,3 +50,5 @@ Before starting the API:
 The API uses spring security. Securityfilterchain allows all access to login and register. All other requests require a JWT token from the server, which is provided when a user logs in.
 
 The only admin right that was required in the assignment was that only a user with a role ADMIN can delete any topic.
+
+Cors configuration is set to allow all requests from localhost:3000, which is the default port for a ReactJS application.
